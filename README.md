@@ -19,3 +19,16 @@ LMU Praktikum CV&DL Group Project
 3. Implement Feature by hand
 4. Commit regularly to the branch (Do this when ever a small feature is working)
 5. Only if features are tested and working push to main 
+
+
+# General
+
+- Create running simple 3 CNN baseline end of Week 1 (over fitted model)
+  - this is to compare later builds with a base line
+  - this also can be used to create something for the 2 page docs
+  - test for our data loader and pipeline to check if everything works like intended
+- Evaluation Metric (Accuracy/Macro-F1 Score/IoU)
+- Lock Train/Val/Test Splits
+  - use fixed seed
+  - this is needed so we can compare the individual models versions to each other
+  

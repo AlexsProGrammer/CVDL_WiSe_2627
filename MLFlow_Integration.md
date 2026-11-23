@@ -93,3 +93,61 @@ MLflow is a complete experiment archive, not just a loss logger. Tracking the it
 * **Hyperparameters & Architecture Choices (`log_params`):** Log learning rate, batch size, optimizer, weight decay, scheduler, backbone name, dropout rate, and image resolution. In the MLflow UI, you can select 10 runs and click **Compare** to get an automatic parallel-coordinates chart or scatter plot showing which parameter actually drove your score up.
 * **Reproducibility Tags (`set_tags`):** Logging the short `git_commit` hash and random seed (`seed=42`) lets you trace any result in your final report back to the exact version of your code that produced it.
 * **Dataset Split Reference:** Log the filename or hash of your locked `train_split.csv` / `val_split.csv` as a parameter so you have proof that every run in your ablation table was evaluated on identical validation data.
+
+
+---
+
+---
+
+# Metadata + Infos Saved in MLFlow
+
+### 1. Adding Info in Python Code (Best for Filtering & Ablation Tables)
+
+In Python, split your metadata across **Parameters** (immutable experimental settings), **Tags** (flexible labels & notes), and **Text Artifacts** (exact PyTorch architecture):
+
+```python
+with mlflow.start_run(run_name="v2-resnet-with-attention"):
+    # 1. Architectural switches & version numbers (become filterable table columns)
+    mlflow.log_params({
+        "model_version": "v2",
+        "backbone": "resnet18",
+        "use_attention": True,
+        "attention_heads": 4,
+        "lr": 1e-3,
+    })
+
+    # 2. Pre-fill the GUI's Description / Notes box directly from code
+    mlflow.set_tag("mlflow.note.content", "Added CBAM spatial attention after block 3 to focus on foreground edges.")
+
+    # 3. Save the exact PyTorch layer structure as a readable text file
+    mlflow.log_text(str(model), "model_architecture.txt")
+
+```
+
+* **Why put `use_attention` and `model_version` in `log_params`?** In the MLflow UI, parameters become dedicated columns. You can type `params.use_attention = "True"` in the search bar (visible in your screenshot) to instantly filter runs, or select a `use_attention=False` run and a `use_attention=True` run side-by-side to generate an ablation comparison chart.
+* **Why `mlflow.log_text(str(model), "model_architecture.txt")`?** Two months from now, when writing the methodology section of your 8-page paper, you won't have to guess what channel dimensions or dropout rates `v2` had—the exact PyTorch summary is saved inside that run's **Artifacts** tab.
+
+---
+
+### 2. Editing Info Directly in the Web GUI (Best for Post-Run Takeaways)
+
+Once a run finishes and you look at its loss curves or confusion matrix, click on the **Run Name** in the table to open its detail page:
+
+* **Description / Notes Box:** Right at the top of the run page is an editable **Description** panel (backed by the same `mlflow.note.content` tag). Click **Edit** and write Markdown notes about what you observed—for example:
+> *Validation F1 jumped from 0.74 to 0.81 with attention, though training time doubled. Keep for final model.*
+
+
+* **Tags Section:** Further down the detail page, you can add or modify custom key-value tags in the browser anytime—such as `report_status = "include_in_table_1"` or `issue = "overfitting"`.
+* **Rename Run:** Click the three dots (`⋮`) next to any run to rename it (e.g., adding `[BASELINE]` or `[BEST]` to the front of the name) without affecting its logged metrics.
+
+*(Note: **Parameters** cannot be edited in the GUI once logged—MLflow locks them intentionally so nobody can accidentally alter the record of how a model was actually trained—while **Run Names**, **Tags**, and **Descriptions** remain editable at any time.)*
+
+---
+
+### 3. Workflow Tip for Your 2-Page & 8-Page Papers
+
+When you are ready to build the results tables for your papers:
+
+1. Filter your runs in the `Experiments` table (e.g., by `tags.report_status = "final"`).
+2. Click **Columns** in the UI to show only `model_version`, `use_attention`, `lr`, and `val_f1`.
+3. Click the **Download CSV** button (in the `⋮` menu above the table) to export all your filtered runs into a clean spreadsheet you can paste straight into your paper.

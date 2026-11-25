@@ -33,6 +33,23 @@ LMU Praktikum CV&DL Group Project
   - this is needed so we can compare the individual models versions to each other
   
 
+# Python venv
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+which python
+deactivate
+```
+
+```bash
+pip install -r requirements.txt
+```
+
+
+# Folder Structure
+
+```
 cvdl_wise_2627/
 ├── .gitignore                 # Verify data/, weights/, mlruns/, .venv/, *.pt, *.zip are ignored
 ├── README.md                  # Quickstart setup + Git branch rules + dataset download URLs
@@ -54,3 +71,4 @@ cvdl_wise_2627/
 │       ├── scratch_cnn.py     # Stub for Member 3 (Mandatory from-scratch baseline)
 │       └── backbone.py        # Stub for Phase 2 (Pretrained ResNet/ConvNeXt wrappers)
 └── report/                    # Optional: unpacked LaTeX template for collaborative writing
+```

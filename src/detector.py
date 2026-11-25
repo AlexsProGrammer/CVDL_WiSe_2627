@@ -1,0 +1,1 @@
+# Largest cat/dog bbox crop

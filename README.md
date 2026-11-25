@@ -56,19 +56,23 @@ cvdl_wise_2627/
 ├── requirements.txt           # Pinned core packages (torch, torchvision, pandas, scikit-learn, tqdm, mlflow, pillow)
 ├── MLFlow_Integration.md      # MLFlow Guide
 ├── inference.py               # Provided evaluation harness (kept intact)
+├── data/
+│   ├── train/                 # Training data (Imgs and Labels.csv)
+│   ├── val_internal/          # Validation data (Imgs and Labels.csv)
+│   ├── val_official/          # Validation data (Imgs and Labels.csv)
 ├── scripts/
 │   ├── inspect_val.py         # Validation EDA script
-│   ├── build_dataset.py       # Raw downloads → dataset_v1 + dataset_mini
-│   └── train.py               # Stub for your unified training & MLflow runner
+│   ├── build_dataset.py       # Raw downloads -> dataset_v1 + dataset_mini
+│   └── train.py               # Unified training & MLflow runner
 ├── src/
 │   ├── __init__.py
-│   ├── dataset.py             # Stub for Member 2 (Dataset + DataLoader)
-│   ├── detector.py            # Stub for Member 4 (Largest cat/dog bbox crop)
-│   ├── pipeline.py            # Stub for You (Combines detector + classifier + reject logic)
-│   ├── xai.py                 # Stub for Phase 3 (Grad-CAM & saliency plots)
+│   ├── dataset.py             # Dataset + DataLoader
+│   ├── detector.py            # Largest cat/dog bbox crop
+│   ├── pipeline.py            # Combines detector + classifier + reject logic
+│   ├── xai.py                 # Grad-CAM & saliency plots
 │   └── models/
 │       ├── __init__.py
-│       ├── scratch_cnn.py     # Stub for Member 3 (Mandatory from-scratch baseline)
-│       └── backbone.py        # Stub for Phase 2 (Pretrained ResNet/ConvNeXt wrappers)
+│       ├── scratch_cnn.py     # Mandatory from-scratch baseline
+│       └── backbone.py        # Pretrained ResNet/ConvNeXt wrappers
 └── report/                    # Optional: unpacked LaTeX template for collaborative writing
 ```

@@ -35,6 +35,7 @@ LMU Praktikum CV&DL Group Project
 
 # Python venv
 
+Linux (ask LLM for Win/Mac):
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
@@ -47,7 +48,7 @@ pip install -r requirements.txt
 ```
 
 
-# Folder Structure
+# Repo Structure
 
 ```
 cvdl_wise_2627/

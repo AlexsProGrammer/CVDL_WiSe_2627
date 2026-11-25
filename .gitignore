@@ -1,3 +1,19 @@
+# Custom
+data/*
+val_official/
+weights/
+*.pth
+*.pt
+*.onnx
+*.jpg
+*.zip
+.env
+
+
+# ---
+
+# Default Python
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
